@@ -1,0 +1,15 @@
+package com.example.application.backend.repository;
+
+import java.util.List;
+
+import com.example.application.backend.entity.Contact;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface ContactRepository extends JpaRepository<Contact, Long> {
+
+  @Query("select c from Contact c where lower(c.firstName) like %:searchTerm% or lower(c.lastName) like %:searchTerm%")
+  List<Contact> search(@Param("searchTerm") String searchTerm);
+}
